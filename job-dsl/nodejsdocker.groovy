@@ -14,7 +14,7 @@ job('NodeJSDocker') {
     }
     steps {
         dockerBuildAndPublish {
-            repositoryName('killabayte/docker-nodejs-project')
+            repositoryName('killabayte/docker-project')
             tag('${GIT_REVISION,length=9}')
             registryCredentials('dockerhub')
             forcePull(false)
