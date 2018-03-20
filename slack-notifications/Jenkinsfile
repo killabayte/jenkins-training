@@ -2,10 +2,10 @@ node {
 
   // job
   try {
-    stage('build') {
+    stage('Build') {
       println('so far so good...')
     }
-    stage('test') {
+    stage('Test') {
       println('A test has failed!')
       sh 'exit 1'
     }
