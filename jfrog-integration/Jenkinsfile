@@ -1,27 +1,27 @@
 node {
-    def server = Artifactory.server('newtechacademy.jfrog.io')
+    def server = Artifactory.server('killabayteyarick.jfrog.io')
     def rtGradle = Artifactory.newGradleBuild()
     def buildInfo = Artifactory.newBuildInfo()
     stage 'Build'
         git url: 'https://github.com/killabayte/gs-gradle.git'
 
-    stage 'Artifactory configuration'
+    stage 'ArtifactoryConfiguration'
         rtGradle.tool = 'gradle' // Tool name from Jenkins configuration
         rtGradle.deployer repo:'gradle-dev-local',  server: server
         rtGradle.resolver repo:'gradle-dev', server: server
 
-        stage('Config Build Info') {
+        stage('ConfigBuildInfo') {
             buildInfo.env.capture = true
             buildInfo.env.filter.addInclude("*")
         }
 
-        stage('Extra gradle configurations') {
+        stage('ExtraGradleConfigurations') {
             rtGradle.usesPlugin = true // Artifactory plugin already defined in build script
         }
-        stage('Exec Gradle') {
+        stage('ExecGradle') {
             rtGradle.run rootDir: "artifactory/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo: buildInfo
         }
-        stage('Publish build info') {
+        stage('PublishBuildInfo') {
             server.publishBuildInfo buildInfo
         }
 }
